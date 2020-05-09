@@ -24,6 +24,11 @@ with ydl:
         download=False # We just want to extract the info
     )
 
+if result["_type"] == 'playlist':
+	result = result['entries'][0] #Playlist TODO
+	
+
+
 if 'entries' in result:
     # Can be a playlist or a list of videos
     video = result['entries'][0]
@@ -71,16 +76,19 @@ print("UDN: ", d.udn)
 d.AVTransport.Stop(InstanceID=0)
 d.AVTransport.SetAVTransportURI(InstanceID=0,CurrentURI=play_uri,CurrentURIMetaData= '')
 d.AVTransport.Play(InstanceID=0, Speed="1")
+time.sleep(1)
+d.AVTransport.Pause(InstanceID=0)
+time.sleep(5)
+d.AVTransport.Play(InstanceID=0, Speed="1")
 
 print("Done!")
 
-'''
 
-No funciona con vídeos de youtube!
 
 while True:
-	print(d.AVTransport.GetPositionInfo(InstanceID=0))
+	info = d.AVTransport.GetPositionInfo(InstanceID=0)
+	print("###### "+info['TrackDuration']+"/"+info['AbsTime']+" ######", end="\r", flush=True)
 	time.sleep(1)
 
-'''
+
 
