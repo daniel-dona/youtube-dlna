@@ -15,7 +15,7 @@ Of course
 
 Usage:
 
-./play.py [-d DEVICE_URL] -v https://youtube.com/watch...
+```./play.py [-d DEVICE_URL] -v https://youtube.com/watch...```
 
 If no DEVICE_URL specified the device will be searched using SSDP. This is a bit slow... but you can copy the URL found in next attempts...
 
