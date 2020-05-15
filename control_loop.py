@@ -18,17 +18,23 @@ class ControlLoop(threading.Thread):
 			self.device = upnpclient.Device(uri)
 			self.status = 1
 			self.log("Connected to "+ uri)
+			self.send("connection", "ready")
 		except:
-			self.log("Unable to connect to "+ uri)
 			self.status = 0
+			self.log("Unable to connect to "+ uri)
+			self.send("connection", "failed")
+			
 			
 	def log(self, msg):
 		print("[Control Loop]", msg)
 		
+	def send(self, kind, data):
+		self.qo.put([kind, data])
+		
 	def _status(self):
 		threading.Timer(1.0, self._status).start()
 		if self.status == 1:
-			self.qo.put(self.device.AVTransport.GetPositionInfo(InstanceID=0))
+			self.send("time_info", self.device.AVTransport.GetPositionInfo(InstanceID=0))
 			self.log("Heartbeat")
 			
 	def media(self, uri):
