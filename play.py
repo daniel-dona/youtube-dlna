@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
+import threading
 import simple_ssdp as ssdp
+import control_loop as control
 import upnpclient
 import time
 import youtube_dl
@@ -24,7 +26,7 @@ with ydl:
         download=False # We just want to extract the info
     )
 
-if result["_type"] == 'playlist':
+if "_type" in result and result["_type"] == 'playlist':
 	result = result['entries'][0] #Playlist TODO
 	
 
@@ -54,7 +56,7 @@ if args.dongle == 'search_it':
 
 	print("Searching dongle...")
 
-	disc = list(ssdp.discover("urn:schemas-upnp-org:device:MediaRenderer:1", retries=5, timeout=1))
+	disc = list(ssdp.discover("urn:schemas-upnp-org:device:MediaRenderer:1", retries=5, timeout=2))
 
 	if len(disc) != 1:
 		print("Oops! Not expected!")
