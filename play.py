@@ -10,7 +10,7 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-v", dest='video', default="https://www.youtube.com/watch?v=dQw4w9WgXcQ", help="YouTube video URL")
-parser.add_argument("-d", dest='dongle', default="search_it", help="YouTube video URL")
+parser.add_argument("-d", dest='dongle', default="search_it", help="Device URL")
 
 args = parser.parse_args()
 
